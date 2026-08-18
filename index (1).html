@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لقمة هنية | مطعمك المفضّل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF3E6;
+    --paper-dark:#F0E4CE;
+    --ink:#2B1B12;
+    --tomato:#C1440E;
+    --tomato-dark:#9C360A;
+    --mustard:#E8A93D;
+    --olive:#6B7B3A;
+    --whatsapp:#25D366;
+    --shadow: 0 10px 30px rgba(43,27,18,0.18);
+    --radius: 14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Cairo', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3, .logo, .stamp-text{
+    font-family:'Rakkas', serif;
+    font-weight:400;
+  }
+
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  .container{
+    width:100%;
+    max-width:1140px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(250,243,230,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+  }
+
+  .nav-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 24px;
+  }
+
+  .logo{
+    font-size:1.6rem;
+    color:var(--tomato);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo span.dot{color:var(--olive);}
+
+  nav.main-nav ul{
+    display:flex;
+    gap:28px;
+    font-weight:600;
+    font-size:0.98rem;
+  }
+  nav.main-nav a{
+    position:relative;
+    padding:4px 2px;
+  }
+  nav.main-nav a::after{
+    content:"";
+    position:absolute;
+    bottom:-4px;
+    right:0;
+    width:0;
+    height:2px;
+    background:var(--tomato);
+    transition:width .25s ease;
+  }
+  nav.main-nav a:hover::after{width:100%;}
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .nav-toggle span{
+    width:26px;
+    height:3px;
+    background:var(--ink);
+    border-radius:2px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    background:url('https://loremflickr.com/1600/1000/burger,food?lock=12') center/cover no-repeat;
+  }
+  .hero-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(20,12,8,0.55) 0%, rgba(20,12,8,0.72) 60%, rgba(20,12,8,0.88) 100%);
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    color:var(--paper);
+    max-width:640px;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    display:inline-block;
+    background:var(--mustard);
+    color:var(--ink);
+    font-weight:700;
+    font-size:0.85rem;
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.2rem);
+    line-height:1.15;
+    color:var(--paper);
+    text-shadow:0 4px 18px rgba(0,0,0,0.35);
+    margin-bottom:14px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--mustard);
+  }
+
+  .hero p{
+    font-size:1.15rem;
+    color:#EFE3CE;
+    margin-bottom:30px;
+    max-width:480px;
+  }
+
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:1rem;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-3px);}
+
+  .btn-primary{
+    background:var(--tomato);
+    color:var(--paper);
+    box-shadow:0 8px 20px rgba(193,68,14,0.45);
+  }
+  .btn-whatsapp{
+    background:var(--whatsapp);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(37,211,102,0.4);
+  }
+  .btn-outline{
+    background:transparent;
+    color:var(--paper);
+    border-color:var(--paper);
+  }
+
+  /* freshness stamp */
+  .stamp{
+    position:absolute;
+    z-index:3;
+    left:40px;
+    bottom:40px;
+    width:120px;
+    height:120px;
+    border:3px dashed var(--mustard);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(-14deg);
+    color:var(--mustard);
+    text-align:center;
+    font-size:0.85rem;
+    font-weight:700;
+    line-height:1.3;
+    background:rgba(20,12,8,0.35);
+  }
+  .stamp-text{font-size:1.05rem;}
+
+  /* ---------- Section heading ---------- */
+  .section{
+    padding:90px 0;
+  }
+  .section-head{
+    text-align:center;
+    max-width:600px;
+    margin:0 auto 50px;
+  }
+  .section-head .eyebrow-line{
+    color:var(--tomato);
+    font-weight:700;
+    letter-spacing:1px;
+    font-size:0.95rem;
+    margin-bottom:8px;
+  }
+  .section-head h2{
+    font-size:clamp(2rem,4vw,2.8rem);
+    margin-bottom:12px;
+  }
+  .section-head p{
+    color:#5a4636;
+  }
+
+  .section-alt{
+    background:var(--paper-dark);
+    position:relative;
+  }
+
+  /* ---------- Menu ---------- */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:26px;
+  }
+
+  .menu-card{
+    background:var(--paper);
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    padding:26px;
+    box-shadow:var(--shadow);
+  }
+
+  .menu-card h3{
+    color:var(--tomato);
+    font-size:1.5rem;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:12px 0;
+    border-bottom:1px dashed #cbb99a;
+  }
+  .menu-item:last-child{border-bottom:none;}
+
+  .menu-item .name{
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .menu-item .leader{
+    flex:1;
+    border-bottom:2px dotted #b8a586;
+    transform:translateY(-5px);
+  }
+  .menu-item .price{
+    font-weight:800;
+    color:var(--olive);
+    white-space:nowrap;
+    font-size:1.05rem;
+  }
+  .badge{
+    display:inline-block;
+    background:var(--mustard);
+    color:var(--ink);
+    font-size:0.7rem;
+    font-weight:800;
+    padding:2px 8px;
+    border-radius:6px;
+    margin-inline-start:6px;
+    vertical-align:middle;
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px;
+  }
+  .gallery img{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:var(--radius);
+    border:2px solid var(--ink);
+    transition:transform .35s ease, filter .35s ease;
+  }
+  .gallery a{
+    overflow:hidden;
+    border-radius:var(--radius);
+    display:block;
+  }
+  .gallery img:hover{
+    transform:scale(1.06);
+  }
+  .gallery .tall{grid-row:span 2; height:100%;}
+  .gallery .tall img{height:100%;}
+
+  /* ---------- Location / hours ---------- */
+  .info-wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+  }
+  .info-card{
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:var(--radius);
+    padding:36px;
+    box-shadow:var(--shadow);
+  }
+  .info-card h3{
+    color:var(--mustard);
+    font-size:1.6rem;
+    margin-bottom:20px;
+  }
+  .info-row{
+    display:flex;
+    gap:14px;
+    margin-bottom:18px;
+    align-items:flex-start;
+  }
+  .info-row .icon{
+    font-size:1.3rem;
+    flex-shrink:0;
+  }
+  .info-row .label{
+    font-weight:700;
+    margin-bottom:2px;
+  }
+  .info-row .value{
+    color:#d9c9ae;
+    font-size:0.95rem;
+  }
+  .map-frame{
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:2px solid var(--ink);
+    box-shadow:var(--shadow);
+    height:360px;
+  }
+  .map-frame iframe{width:100%; height:100%; border:0;}
+
+  /* ---------- CTA strip ---------- */
+  .cta-strip{
+    background:var(--tomato);
+    color:var(--paper);
+    text-align:center;
+    padding:60px 24px;
+  }
+  .cta-strip h2{
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    margin-bottom:14px;
+  }
+  .cta-strip p{
+    margin-bottom:26px;
+    color:#f7e3d4;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--ink);
+    color:#c9b79a;
+    padding:36px 24px;
+    text-align:center;
+    font-size:0.9rem;
+  }
+  footer strong{color:var(--paper);}
+
+  /* ---------- Floating WhatsApp ---------- */
+  .float-whatsapp{
+    position:fixed;
+    bottom:24px;
+    left:24px;
+    z-index:200;
+    background:var(--whatsapp);
+    color:#fff;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.7rem;
+    box-shadow:0 10px 24px rgba(37,211,102,0.5);
+    animation:pulse 2.4s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(37,211,102,0.55);}
+    70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}
+    100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .info-wrap{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .gallery .tall{grid-row:span 1; height:230px;}
+  }
+
+  @media (max-width: 720px){
+    nav.main-nav{
+      position:absolute;
+      top:100%;
+      right:0;
+      left:0;
+      background:var(--paper);
+      border-bottom:2px solid var(--ink);
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    nav.main-nav.open{max-height:320px;}
+    nav.main-nav ul{
+      flex-direction:column;
+      padding:18px 24px;
+      gap:16px;
+    }
+    .nav-toggle{display:flex;}
+    .stamp{width:96px; height:96px; left:20px; bottom:20px; font-size:0.75rem;}
+    .stamp-text{font-size:0.9rem;}
+    .hero{min-height:78vh; text-align:center;}
+    .hero-content{margin:0 auto;}
+    .hero-actions{justify-content:center;}
+  }
+
+  @media (max-width: 520px){
+    .gallery{grid-template-columns:1fr 1fr;}
+    .menu-item{flex-wrap:wrap;}
+    .float-whatsapp{width:52px; height:52px; font-size:1.4rem; bottom:16px; left:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <a href="#" class="logo">لقمة <span class="dot">هنية</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="#menu">المنيو</a></li>
+        <li><a href="#gallery">صور الأكل</a></li>
+        <li><a href="#location">الموقع والمواعيد</a></li>
+        <li><a href="#contact">تواصل معانا</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="stamp">
+    <div class="stamp-text">طازة<br>١٠٠٪<br>يوميًا</div>
+  </div>
+  <div class="container hero-content">
+    <span class="eyebrow">🍕 مطعم لقمة هنية</span>
+    <h1>أهلاً بيك في <em>لقمة هنية</em></h1>
+    <p>من قلب المطبخ لطبقك، أكل طازة بيتحضّر لحظة ما تطلبه — من غير أي حاجة جاهزة أو مجمّدة.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/201234567890?text=عايز%20أطلب%20من%20لقمة%20هنية" class="btn btn-whatsapp" target="_blank" rel="noopener">
+        💬 اطلب عبر واتساب
+      </a>
+      <a href="#menu" class="btn btn-outline">شوف المنيو</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow-line">المنيو</div>
+      <h2>🍔 إيه اللي هنقدّمهولك</h2>
+      <p>أطباق مختارة بعناية، من أكتر الأصناف اللي بيطلبها زبايننا.</p>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>🍔 برجرات</h3>
+        <div class="menu-item">
+          <span class="name">برجر لحمة كلاسيك <span class="badge">الأكثر طلبًا</span></span>
+          <span class="leader"></span>
+          <span class="price">١٥٠ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">برجر دجاج مقرمش</span>
+          <span class="leader"></span>
+          <span class="price">١٣٥ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">برجر دبل تشيز</span>
+          <span class="leader"></span>
+          <span class="price">١٧٥ ج.م</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <h3>🍕 بيتزا</h3>
+        <div class="menu-item">
+          <span class="name">بيتزا مارجريتا</span>
+          <span class="leader"></span>
+          <span class="price">١٥٥ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">بيتزا لحمة مشكل</span>
+          <span class="leader"></span>
+          <span class="price">١٨٠ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">بيتزا خضار</span>
+          <span class="leader"></span>
+          <span class="price">١٤٠ ج.م</span>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <h3>🍝 باستا</h3>
+        <div class="menu-item">
+          <span class="name">باستا ألفريدو</span>
+          <span class="leader"></span>
+          <span class="price">١٣٠ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">باستا بولونيز</span>
+          <span class="leader"></span>
+          <span class="price">١٤٥ ج.م</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">باستا صوص أبيض بالدجاج</span>
+          <span class="leader"></span>
+          <span class="price">١٦٠ ج.م</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow-line">معرض الصور</div>
+      <h2>📸 لمحة من مطبخنا</h2>
+      <p>كل طبق بيتحضّر بعناية قبل ما يوصلك.</p>
+    </div>
+    <div class="gallery">
+      <a class="tall" href="#"><img src="https://loremflickr.com/500/700/pizza?lock=21" alt="بيتزا طازة"></a>
+      <a href="#"><img src="https://loremflickr.com/500/350/burger?lock=22" alt="برجر لحمة"></a>
+      <a href="#"><img src="https://loremflickr.com/500/350/pasta?lock=23" alt="طبق باستا"></a>
+      <a class="tall" href="#"><img src="https://loremflickr.com/500/700/restaurant,food?lock=24" alt="أجواء المطعم"></a>
+      <a href="#"><img src="https://loremflickr.com/500/350/pizza,cheese?lock=25" alt="بيتزا بالجبنة"></a>
+      <a href="#"><img src="https://loremflickr.com/500/350/burger,fries?lock=26" alt="برجر مع بطاطس"></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="location">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow-line">الموقع والمواعيد</div>
+      <h2>📍 هتلاقينا فين</h2>
+    </div>
+    <div class="info-wrap">
+      <div class="info-card">
+        <h3>بيانات المطعم</h3>
+        <div class="info-row">
+          <span class="icon">📍</span>
+          <div>
+            <div class="label">العنوان</div>
+            <div class="value">١٢ شارع الكورنيش، محطة الرمل، الإسكندرية</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="icon">🕒</span>
+          <div>
+            <div class="label">مواعيد العمل</div>
+            <div class="value">يوميًا من ١٢ ظهرًا حتى ١٢ منتصف الليل</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="icon">📞</span>
+          <div>
+            <div class="label">رقم التواصل</div>
+            <div class="value">٠١٢٣٤٥٦٧٨٩٠</div>
+          </div>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps?q=Alexandria%20Corniche&output=embed" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-strip" id="contact">
+  <div class="container">
+    <h2>جعان دلوقتي؟ 😋</h2>
+    <p>اطلب أوردرك في ثواني، وهيوصلك طازة على السخن.</p>
+    <a href="https://wa.me/201234567890?text=عايز%20أطلب%20من%20لقمة%20هنية" class="btn" style="background:var(--paper); color:var(--tomato);" target="_blank" rel="noopener">
+      💬 اطلب عبر واتساب دلوقتي
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p>جميع الحقوق محفوظة © <strong>لقمة هنية</strong> 2026</p>
+  <p>مطعم عائلي بطعم البيت 🍽️</p>
+</footer>
+
+<a href="https://wa.me/201234567890?text=عايز%20أطلب%20من%20لقمة%20هنية" class="float-whatsapp" target="_blank" rel="noopener" aria-label="اطلب عبر واتساب">
+  💬
+</a>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('mainNav');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => nav.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
